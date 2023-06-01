@@ -1,87 +1,82 @@
-import { useState } from "react";
+import React, { useState } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 
 function P1() {
-  const [inputFields, setInputFields] = useState([
-    { firstName: "", lastName: "" },
-  ]);
+  const [firstNames, setFirstNames] = useState([""]);
+  const [lastNames, setLastNames] = useState([""]);
 
   const handleAddFields = () => {
-    const values = [...inputFields];
-    values.push({ firstName: "", lastName: "" });
-    setInputFields(values);
+    setFirstNames([...firstNames, ""]);
+    setLastNames([...lastNames, ""]);
   };
 
   const handleRemoveFields = (index) => {
-    const values = [...inputFields];
-    values.splice(index, 1);
-    setInputFields(values);
+    const values1 = [...firstNames];
+    const values2 = [...lastNames];
+    values1.splice(index, 1);
+    values2.splice(index, 1);
+    setFirstNames(values1);
+    setLastNames(values2);
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log("inputFields", inputFields);
+    console.log("firstNames", firstNames);
+    console.log("lastNames", lastNames);
+    // Make API call with firstNames and lastNames
+  };
+
+  const handleInputChange = (index, event) => {
+    const values1 = [...firstNames];
+    const values2 = [...lastNames];
+    if (event.target.name === "firstName") {
+      values1[index] = event.target.value;
+    } else {
+      values2[index] = event.target.value;
+    }
+    setFirstNames(values1);
+    setLastNames(values2);
   };
 
   return (
     <div className="d-flex justify-content-center">
       <Form onSubmit={handleSubmit}>
-        {inputFields.map((inputField, index) => (
-          <Row key={index}>
+        {firstNames.map((firstName, index) => (
+          <Row key={index} className="mt-2">
             <Col>
-              <Form.Group>
-                <Form.Label>Process Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="firstName"
-                  value={inputField.firstName}
-                  onChange={(e) => {
-                    const values = [...inputFields];
-                    values[index].firstName = e.target.value;
-                    setInputFields(values);
-                  }}
-                />
-              </Form.Group>
+              <Form.Control
+                type="text"
+                placeholder="First Name"
+                name="firstName"
+                value={firstName}
+                onChange={(event) => handleInputChange(index, event)}
+              />
             </Col>
             <Col>
-              <Form.Group>
-                <Form.Label>Process Time</Form.Label>
-                <Form.Control
-                  type="number"
-                  name="lastName"
-                  value={inputField.lastName}
-                  onChange={(e) => {
-                    const values = [...inputFields];
-                    values[index].lastName = e.target.value;
-                    setInputFields(values);
-                  }}
-                />
-              </Form.Group>
+              <Form.Control
+                type="text"
+                placeholder="Last Name"
+                name="lastName"
+                value={lastNames[index]}
+                onChange={(event) => handleInputChange(index, event)}
+              />
             </Col>
             <Col>
-              <Form.Label>Remove</Form.Label>
-              <br></br>
               <Button
                 variant="danger"
-                type="button"
                 onClick={() => handleRemoveFields(index)}
               >
-                -
+                Remove
               </Button>
             </Col>
           </Row>
         ))}
-        <br></br>
-        <Row>
-          <Col md={{ span: 8, offset: 2 }} className="mb-3">
-            <Button variant="primary" type="button" onClick={handleAddFields}>
-              +
-            </Button>{" "}
-            <Button variant="primary" type="submit">
-              Submit
+        <div className="d-flex justify-content-center mt-2">
+            <Button variant="secondary" onClick={() => handleAddFields()} className="mx-2">
+              Add
             </Button>
-          </Col>
-        </Row>
+            <Button type="submit" className="mx-2">Submit</Button>
+        </div>
       </Form>
     </div>
   );
