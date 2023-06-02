@@ -7,7 +7,7 @@ import Navigation from './componenets/Navigation';
 function App() {
   return (
     <div className="App">
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
