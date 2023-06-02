@@ -7,14 +7,15 @@ import Navigation from './componenets/Navigation';
 function App() {
   return (
     <div className="App">
-      <Router>
+      <P1 />
+      {/* <Router>
         <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/P1" element={<P1 />} />
           <Route path="/P2" element={<P2 />} />
         </Routes>
-      </Router>
+      </Router> */}
     </div>
   );
 }
