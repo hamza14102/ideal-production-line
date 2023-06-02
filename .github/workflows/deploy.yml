@@ -3,7 +3,7 @@ name: Build and Deploy
 on:
   push:
     branches:
-      - master
+      - main
 
 jobs:
   build-and-deploy:
@@ -24,3 +24,5 @@ jobs:
         with:
           branch: gh-pages
           folder: build
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
