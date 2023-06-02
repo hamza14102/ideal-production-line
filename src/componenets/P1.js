@@ -24,6 +24,7 @@ function P1() {
     console.log("firstNames", firstNames);
     console.log("lastNames", lastNames);
     // Make API call with firstNames and lastNames
+    alert("Submitted Successfully!");
   };
 
   const handleInputChange = (index, event) => {
@@ -46,7 +47,7 @@ function P1() {
             <Col>
               <Form.Control
                 type="text"
-                placeholder="First Name"
+                placeholder="Process Name"
                 name="firstName"
                 value={firstName}
                 onChange={(event) => handleInputChange(index, event)}
@@ -54,8 +55,8 @@ function P1() {
             </Col>
             <Col>
               <Form.Control
-                type="text"
-                placeholder="Last Name"
+                type="number"
+                placeholder="Process Time"
                 name="lastName"
                 value={lastNames[index]}
                 onChange={(event) => handleInputChange(index, event)}
