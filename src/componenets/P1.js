@@ -4,6 +4,7 @@ import { Form, Button, Row, Col } from "react-bootstrap";
 function P1() {
   const [firstNames, setFirstNames] = useState([""]);
   const [lastNames, setLastNames] = useState([""]);
+  const [number, setNumber] = useState("");
 
   const handleAddFields = () => {
     setFirstNames([...firstNames, ""]);
@@ -23,9 +24,12 @@ function P1() {
     e.preventDefault();
     console.log("firstNames", firstNames);
     console.log("lastNames", lastNames);
+    console.log("number", number);
     // Make API call with firstNames and lastNames
     alert("Submitted Successfully!");
   };
+
+  
 
   const handleInputChange = (index, event) => {
     const values1 = [...firstNames];
@@ -42,6 +46,19 @@ function P1() {
   return (
     <div className="d-flex justify-content-center">
       <Form onSubmit={handleSubmit}>
+        <Form.Group as={Row} controlId="formNumber">
+          <Form.Label column sm={2}>
+            Manpower
+          </Form.Label>
+          <Col sm={10}>
+            <Form.Control
+              type="number"
+              placeholder="Enter Total Manpower"
+              value={number}
+              onChange={(e) => setNumber(e.target.value)}
+            />
+          </Col>
+        </Form.Group>
         {firstNames.map((firstName, index) => (
           <Row key={index} className="mt-2">
             <Col>
