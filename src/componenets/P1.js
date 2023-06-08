@@ -28,10 +28,11 @@ function P1() {
 		// Make API call with firstNames and lastNames
 		alert("Submitted Successfully!");
 		// replace with API call
-		const apiGatewayUrl = 'https://3yqpnb2skl.execute-api.us-east-2.amazonaws.com/Initial';
+		const apiGatewayUrl = 'https://7e5wwzxsya.execute-api.us-east-2.amazonaws.com/Initial';
+		const resourcePath = '/get-call';
 		const queryParams = `firstNames=${firstNames.join(',')}&lastNames=${lastNames.join(',')}&number=${number}`;
 
-		fetch(`${apiGatewayUrl}?${queryParams}`)
+		fetch(`${apiGatewayUrl}${resourcePath}?${queryParams}`)
 			.then(response => response.json())
 			.then(data => console.log(data))
 			.catch(error => console.error(error));
