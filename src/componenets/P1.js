@@ -29,7 +29,7 @@ function P1() {
 		alert("Submitted Successfully!");
 		// replace with API call
 		const apiGatewayUrl = 'https://4110ohgv2h.execute-api.us-east-2.amazonaws.com/launch';
-		const resourcePath = '/p1';
+		const resourcePath = '/p1/';
 		const queryParams = `firstNames=${firstNames.join(',')}&lastNames=${lastNames.join(',')}&number=${number}`;
 
 		fetch(`${apiGatewayUrl}${resourcePath}?${queryParams}`)
