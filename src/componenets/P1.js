@@ -25,17 +25,24 @@ function P1() {
 		console.log("firstNames", firstNames);
 		console.log("lastNames", lastNames);
 		console.log("number", number);
-		// Make API call with firstNames and lastNames
+		// Make API call with firstNames and lastNames - replace variable names later
 		alert("Submitted Successfully!");
-		// replace with API call
 		const apiGatewayUrl = 'https://4110ohgv2h.execute-api.us-east-2.amazonaws.com/launch';
-		const resourcePath = '/p1/';
+		const resourcePath = '/p1';
 		const queryParams = `firstNames=${firstNames.join(',')}&lastNames=${lastNames.join(',')}&number=${number}`;
 
 		fetch(`${apiGatewayUrl}${resourcePath}?${queryParams}`)
-			.then(response => response.json())
+			.then(response => {
+				if (!response.ok) {
+					throw new Error('Network response was not ok');
+				}
+				return response.json();
+			})
 			.then(data => console.log(data))
-			.catch(error => console.error(error));
+			.catch(error => {
+				console.error(error);
+				alert('There was an error submitting the form. Please try again later.');
+			});
 	};
 
 
