@@ -1,21 +1,27 @@
+import React from 'react';
+import { Navbar, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
-function Navigation() {
+const Navigation = () => {
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Home</Link>
-        </li>
-        <li>
-          <Link to="/P1">Page 1</Link>
-        </li>
-        <li>
-          <Link to="/P2">Page 2</Link>
-        </li>
-      </ul>
-    </nav>
+    <Navbar bg="light" expand="lg px-3">
+      <Navbar.Brand>My Website</Navbar.Brand>
+      <Navbar.Toggle aria-controls="basic-navbar-nav" />
+      <Navbar.Collapse id="basic-navbar-nav">
+        <Nav className="ml-auto">
+          <Link to="/" className="nav-link">
+            Home
+          </Link>
+          <Link to="/P1" className="nav-link">
+            Distribution Calculator
+          </Link>
+          <Link to="/P2" className="nav-link">
+            Page 2
+          </Link>
+        </Nav>
+      </Navbar.Collapse>
+    </Navbar>
   );
-}
+};
 
 export default Navigation;

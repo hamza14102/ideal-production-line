@@ -75,7 +75,7 @@ function P1() {
 	return (
 		<div className="d-flex justify-content-center">
 			<div className="row-md-6">
-				<Form onSubmit={handleSubmit}>
+				<Form onSubmit={handleSubmit} className="pt-3 pb-3">
 					<Form.Group as={Row} controlId="formNumber">
 						<Form.Label column sm={2}>
 							Manpower
