@@ -31,7 +31,7 @@ function P1() {
 		console.log("number", number);
 		// Make API call with firstNames and lastNames - replace variable names later
 		// change to selective CORS later and try with Default 4xx instead of lambda change
-		alert("Submitted Successfully!");
+		// alert("Submitted Successfully!");
 		const apiGatewayUrl = 'https://4110ohgv2h.execute-api.us-east-2.amazonaws.com/launch';
 		const resourcePath = '/p1';
 		const queryParams = `firstNames=${firstNames.join(',')}&lastNames=${lastNames.join(',')}&number=${number}`;

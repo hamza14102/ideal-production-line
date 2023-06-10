@@ -23,6 +23,9 @@ const DisplayData = ({ data }) => {
 							<td>{data.lastNames[index]}</td>
 						</tr>
 					))}
+					<tr>
+						<td colSpan="2">Ideal Conveyor Speed: {data.number}</td>
+					</tr>
 				</tbody>
 			</Table>
 		</div>
