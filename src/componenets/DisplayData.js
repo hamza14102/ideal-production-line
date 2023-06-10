@@ -26,6 +26,9 @@ const DisplayData = ({ data }) => {
 					<tr>
 						<td colSpan="2">Ideal Conveyor Speed: {data.number}</td>
 					</tr>
+					<tr>
+						<td colSpan="2">Ideal Output per hour: {3600 / data.number}</td>
+					</tr>
 				</tbody>
 			</Table>
 		</div>
