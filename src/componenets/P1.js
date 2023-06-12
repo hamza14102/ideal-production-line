@@ -86,6 +86,7 @@ function P1() {
 								placeholder="Enter Total Manpower"
 								value={number}
 								onChange={(e) => setNumber(e.target.value)}
+								required
 							/>
 						</Col>
 					</Form.Group>
@@ -98,6 +99,7 @@ function P1() {
 									name="firstName"
 									value={firstName}
 									onChange={(event) => handleInputChange(index, event)}
+									required
 								/>
 							</Col>
 							<Col>
@@ -107,6 +109,7 @@ function P1() {
 									name="lastName"
 									value={lastNames[index]}
 									onChange={(event) => handleInputChange(index, event)}
+									required
 								/>
 							</Col>
 							<Col>

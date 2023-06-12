@@ -1,90 +1,96 @@
-import { useState } from "react";
-import { Form, Button, Row, Col } from "react-bootstrap";
+import React, { useState } from 'react';
+import { Form, Button, Row, Col } from 'react-bootstrap';
 
-function P2() {
-  const [inputFields, setInputFields] = useState([
-    { firstName: "", lastName: "" },
-  ]);
+const P2 = () => {
+  const [productId, setProductId] = useState('');
+  const [processes, setProcesses] = useState([{ name: '', time: '' }]);
 
-  const handleAddFields = () => {
-    const values = [...inputFields];
-    values.push({ firstName: "", lastName: "" });
-    setInputFields(values);
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    console.log(productId, processes);
+    // TODO: Submit data to AWS database
   };
 
-  const handleRemoveFields = (index) => {
-    const values = [...inputFields];
+  const handleInputChange = (index, event) => {
+    const values = [...processes];
+    if (event.target.name === 'name') {
+      values[index].name = event.target.value;
+    } else {
+      values[index].time = event.target.value;
+    }
+    setProcesses(values);
+  };
+
+  const handleAddProcess = () => {
+    const values = [...processes];
+    values.push({ name: '', time: '' });
+    setProcesses(values);
+  };
+
+  const handleRemoveProcess = (index) => {
+    const values = [...processes];
     values.splice(index, 1);
-    setInputFields(values);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log("inputFields", inputFields);
+    setProcesses(values);
   };
 
   return (
     <div className="d-flex justify-content-center">
-      <Form onSubmit={handleSubmit}>
-        {inputFields.map((inputField, index) => (
-          <Row key={index}>
-            <Col>
-              <Form.Group>
-                <Form.Label>First Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="firstName"
-                  value={inputField.firstName}
-                  onChange={(e) => {
-                    const values = [...inputFields];
-                    values[index].firstName = e.target.value;
-                    setInputFields(values);
-                  }}
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Group>
-                <Form.Label>Last Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  name="lastName"
-                  value={inputField.lastName}
-                  onChange={(e) => {
-                    const values = [...inputFields];
-                    values[index].lastName = e.target.value;
-                    setInputFields(values);
-                  }}
-                />
-              </Form.Group>
-            </Col>
-            <Col>
-              <Form.Label>Remove</Form.Label>
-              <br></br>
-              <Button
-                variant="danger"
-                type="button"
-                onClick={() => handleRemoveFields(index)}
-              >
-                -
-              </Button>
-            </Col>
-          </Row>
-        ))}
-        <br></br>
-        <Row>
-          <Col md={{ span: 8, offset: 2 }} className="mb-3">
-            <Button variant="primary" type="button" onClick={handleAddFields}>
-              +
-            </Button>{" "}
-            <Button variant="primary" type="submit">
+      <div className="row-md-6">
+        <Form onSubmit={handleSubmit}>
+          <Form.Group controlId="formProductId" className='mb-3'>
+            <Form.Label>Product ID</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Enter Product ID"
+              value={productId}
+              onChange={(e) => setProductId(e.target.value)}
+            />
+          </Form.Group>
+          {processes.map((process, index) => (
+            <Row key={index} className="mb-3 align-items-end">
+              <Col>
+                <Form.Group controlId={`formProcessName${index}`}>
+                  {/* <Form.Label>Process Name</Form.Label> */}
+                  <Form.Control
+                    type="text"
+                    name="name"
+                    placeholder="Enter Process Name"
+                    value={process.name}
+                    onChange={(event) => handleInputChange(index, event)}
+                  />
+                </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId={`formProcessTime${index}`}>
+                  {/* <Form.Label>Process Time</Form.Label> */}
+                  <Form.Control
+                    type="number"
+                    name="time"
+                    placeholder="Enter Process Time"
+                    value={process.time}
+                    onChange={(event) => handleInputChange(index, event)}
+                  />
+                </Form.Group>
+              </Col>
+              <Col className="d-flex justify-content-end">
+                <Button variant="danger" onClick={() => handleRemoveProcess(index)}>
+                  Remove
+                </Button>
+              </Col>
+            </Row>
+          ))}
+          <div className="d-flex justify-content-center my-3">
+            <Button variant="primary" type="submit" className="mr-3 mx-3">
               Submit
             </Button>
-          </Col>
-        </Row>
-      </Form>
+            <Button variant="secondary" onClick={handleAddProcess}>
+              Add Process
+            </Button>
+          </div>
+        </Form>
+      </div>
     </div>
   );
-}
+};
 
 export default P2;
