@@ -44,6 +44,7 @@ const P2 = () => {
               placeholder="Enter Product ID"
               value={productId}
               onChange={(e) => setProductId(e.target.value)}
+              required
             />
           </Form.Group>
           {processes.map((process, index) => (
@@ -57,6 +58,7 @@ const P2 = () => {
                     placeholder="Enter Process Name"
                     value={process.name}
                     onChange={(event) => handleInputChange(index, event)}
+                    required
                   />
                 </Form.Group>
               </Col>
@@ -69,6 +71,7 @@ const P2 = () => {
                     placeholder="Enter Process Time"
                     value={process.time}
                     onChange={(event) => handleInputChange(index, event)}
+                    required
                   />
                 </Form.Group>
               </Col>
