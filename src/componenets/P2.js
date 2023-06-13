@@ -1,9 +1,54 @@
 import React, { useState } from 'react';
 import { Form, Button, Row, Col } from 'react-bootstrap';
+import Autosuggest from 'react-autosuggest';
 
 const P2 = () => {
   const [productId, setProductId] = useState('');
   const [processes, setProcesses] = useState([{ name: '', time: '' }]);
+  const [colorValue, setColorValue] = useState('');
+  // eslint-disable-next-line no-unused-vars
+  const [colorSuggestions, setColorSuggestions] = useState([]);
+
+  const colorOptions = [
+    { name: 'Red' },
+    { name: 'Green' },
+    { name: 'Blue' },
+    { name: 'Yellow' },
+    { name: 'Orange' },
+    { name: 'Purple' },
+    { name: 'Brown' },
+    { name: 'Black' },
+    { name: 'White' },
+    { name: 'Gray' },
+    { name: 'Pink' },
+    { name: 'Cyan' },
+    { name: 'Magenta' },
+    { name: 'Lime' },
+    { name: 'Teal' },
+    { name: 'Lavender' },
+  ];
+
+  const handleColorChange = (event, { newValue }) => {
+    setColorValue(newValue);
+  };
+
+  const renderColorSuggestion = (suggestion) => (
+    <div className="color-suggestion">
+      {suggestion.name}
+    </div>
+  );
+
+  const getColorSuggestions = (value) => {
+    const inputValue = value.trim().toLowerCase();
+    const inputLength = inputValue.length;
+    return inputLength === 0 ? [] : colorOptions.filter(option =>
+      option.name.toLowerCase().slice(0, inputLength) === inputValue
+    );
+  };
+
+  const handleColorSuggestionSelected = (event, { suggestion }) => {
+    setColorValue(suggestion.name);
+  };
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -91,6 +136,19 @@ const P2 = () => {
             </Button>
           </div>
         </Form>
+        <Autosuggest
+          suggestions={getColorSuggestions(colorValue)}
+          onSuggestionsFetchRequested={({ value }) => setColorSuggestions(getColorSuggestions(value))}
+          onSuggestionsClearRequested={() => setColorSuggestions([])}
+          getSuggestionValue={(suggestion) => suggestion.name}
+          renderSuggestion={renderColorSuggestion}
+          inputProps={{
+            placeholder: 'Color',
+            value: colorValue,
+            onChange: handleColorChange,
+          }}
+          onSuggestionSelected={handleColorSuggestionSelected}
+        />
       </div>
     </div>
   );
