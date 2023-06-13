@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/ideal-production-line/static/css/main.e24eb15b.css",
-    "main.js": "/ideal-production-line/static/js/main.ba9d3d30.js",
+    "main.js": "/ideal-production-line/static/js/main.0842abc6.js",
     "static/js/787.08a9a8f1.chunk.js": "/ideal-production-line/static/js/787.08a9a8f1.chunk.js",
     "index.html": "/ideal-production-line/index.html",
     "main.e24eb15b.css.map": "/ideal-production-line/static/css/main.e24eb15b.css.map",
-    "main.ba9d3d30.js.map": "/ideal-production-line/static/js/main.ba9d3d30.js.map",
+    "main.0842abc6.js.map": "/ideal-production-line/static/js/main.0842abc6.js.map",
     "787.08a9a8f1.chunk.js.map": "/ideal-production-line/static/js/787.08a9a8f1.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.e24eb15b.css",
-    "static/js/main.ba9d3d30.js"
+    "static/js/main.0842abc6.js"
   ]
 }
