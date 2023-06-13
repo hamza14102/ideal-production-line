@@ -80,7 +80,7 @@ const P2 = () => {
   return (
     <div className="d-flex justify-content-center">
       <div className="row-md-6">
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} className='mx-3'>
           <Form.Group controlId="formProductId" className='mb-3'>
             <Form.Label>Product ID</Form.Label>
             <Autosuggest
