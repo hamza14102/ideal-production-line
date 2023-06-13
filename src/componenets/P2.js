@@ -5,7 +5,6 @@ import Autosuggest from 'react-autosuggest';
 const P2 = () => {
   const [productId, setProductId] = useState('');
   const [processes, setProcesses] = useState([{ name: '', time: '' }]);
-  const [colorValue, setColorValue] = useState('');
   // eslint-disable-next-line no-unused-vars
   const [colorSuggestions, setColorSuggestions] = useState([]);
 
@@ -29,7 +28,7 @@ const P2 = () => {
   ];
 
   const handleColorChange = (event, { newValue }) => {
-    setColorValue(newValue);
+    setProductId(newValue);
   };
 
   const renderColorSuggestion = (suggestion) => (
@@ -47,7 +46,7 @@ const P2 = () => {
   };
 
   const handleColorSuggestionSelected = (event, { suggestion }) => {
-    setColorValue(suggestion.name);
+    setProductId(suggestion.name);
   };
 
   const handleSubmit = (event) => {
@@ -84,12 +83,18 @@ const P2 = () => {
         <Form onSubmit={handleSubmit}>
           <Form.Group controlId="formProductId" className='mb-3'>
             <Form.Label>Product ID</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Enter Product ID"
-              value={productId}
-              onChange={(e) => setProductId(e.target.value)}
-              required
+            <Autosuggest
+              suggestions={getColorSuggestions(productId)}
+              onSuggestionsFetchRequested={({ value }) => setColorSuggestions(getColorSuggestions(value))}
+              onSuggestionsClearRequested={() => setColorSuggestions([])}
+              getSuggestionValue={(suggestion) => suggestion.name}
+              renderSuggestion={renderColorSuggestion}
+              inputProps={{
+                placeholder: 'Product ID',
+                value: productId,
+                onChange: handleColorChange,
+              }}
+              onSuggestionSelected={handleColorSuggestionSelected}
             />
           </Form.Group>
           {processes.map((process, index) => (
@@ -136,19 +141,6 @@ const P2 = () => {
             </Button>
           </div>
         </Form>
-        <Autosuggest
-          suggestions={getColorSuggestions(colorValue)}
-          onSuggestionsFetchRequested={({ value }) => setColorSuggestions(getColorSuggestions(value))}
-          onSuggestionsClearRequested={() => setColorSuggestions([])}
-          getSuggestionValue={(suggestion) => suggestion.name}
-          renderSuggestion={renderColorSuggestion}
-          inputProps={{
-            placeholder: 'Color',
-            value: colorValue,
-            onChange: handleColorChange,
-          }}
-          onSuggestionSelected={handleColorSuggestionSelected}
-        />
       </div>
     </div>
   );
