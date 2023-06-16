@@ -16,7 +16,10 @@ const Navigation = () => {
             Distribution Calculator
           </Link>
           <Link to="/P2" className="nav-link">
-            Page 2
+            Create Product
+          </Link>
+          <Link to="/SupervisorSearch" className="nav-link">
+            Supervisor Search
           </Link>
         </Nav>
       </Navbar.Collapse>

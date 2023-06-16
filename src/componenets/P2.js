@@ -1,63 +1,56 @@
-import React, { useState } from 'react';
-import { Form, Button, Row, Col } from 'react-bootstrap';
-import Autosuggest from 'react-autosuggest';
+import React, { useState, useEffect } from "react";
+import { Form, Button, Row, Col } from "react-bootstrap";
+import Autosuggest from "react-autosuggest";
+import { Spinner } from 'react-bootstrap';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const P2 = () => {
-  const [productId, setProductId] = useState('');
-  const [processes, setProcesses] = useState([{ name: '', time: '' }]);
+  const [productId, setProductId] = useState("");
+  const [processes, setProcesses] = useState([{ name: "", time: "" }]);
   // eslint-disable-next-line no-unused-vars
   const [colorSuggestions, setColorSuggestions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const colorOptions = [
-    { name: 'Red' },
-    { name: 'Green' },
-    { name: 'Blue' },
-    { name: 'Yellow' },
-    { name: 'Orange' },
-    { name: 'Purple' },
-    { name: 'Brown' },
-    { name: 'Black' },
-    { name: 'White' },
-    { name: 'Gray' },
-    { name: 'Pink' },
-    { name: 'Cyan' },
-    { name: 'Magenta' },
-    { name: 'Lime' },
-    { name: 'Teal' },
-    { name: 'Lavender' },
-  ];
+
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    fetch('https://a7ivt3xloc.execute-api.us-east-2.amazonaws.com/prod-info/products')
+      .then(response => response.json())
+      .then(data => {
+        setProducts(data)
+      });
+  }, []);
 
   const handleColorChange = (event, { newValue }) => {
     setProductId(newValue);
   };
 
   const renderColorSuggestion = (suggestion) => (
-    <div className="color-suggestion">
-      {suggestion.name}
-    </div>
+    <div className="color-suggestion">{suggestion.product_id}</div>
   );
 
   const getColorSuggestions = (value) => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
-    return inputLength === 0 ? [] : colorOptions.filter(option =>
-      option.name.toLowerCase().slice(0, inputLength) === inputValue
-    );
+    return inputLength === 0
+      ? []
+      : products.filter(
+        (option) => {
+          return option.product_id.toLowerCase().slice(0, inputLength) ===
+            inputValue
+        }
+      );
   };
 
   const handleColorSuggestionSelected = (event, { suggestion }) => {
-    setProductId(suggestion.name);
-  };
-
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    console.log(productId, processes);
-    // TODO: Submit data to AWS database
+    setProductId(suggestion.product_id);
   };
 
   const handleInputChange = (index, event) => {
     const values = [...processes];
-    if (event.target.name === 'name') {
+    if (event.target.name === "name") {
       values[index].name = event.target.value;
     } else {
       values[index].time = event.target.value;
@@ -67,7 +60,7 @@ const P2 = () => {
 
   const handleAddProcess = () => {
     const values = [...processes];
-    values.push({ name: '', time: '' });
+    values.push({ name: "", time: "" });
     setProcesses(values);
   };
 
@@ -77,20 +70,118 @@ const P2 = () => {
     setProcesses(values);
   };
 
+  const handleCreate = () => {
+    if (!productId || !processes.every(process => process.name && process.time)) {
+      alert('Please fill in all fields correctly');
+      return;
+    }
+
+    setIsLoading(true);
+    const data = { product_id: productId, processes };
+    fetch('https://a7ivt3xloc.execute-api.us-east-2.amazonaws.com/prod-info/product', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(response => {
+        console.log(response);
+        if (response.status === 400) {
+          toast.error('Product already exists!');
+        } else if (response.status === 200) {
+          toast.success('Product Created!');
+        } else {
+          toast.error('Something went wrong!');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => console.error(error))
+      .finally(() => setIsLoading(false));;
+  };
+
+  const handleUpdate = () => {
+    if (!productId || !processes.every(process => process.name && process.time)) {
+      alert('Please fill in all fields correctly');
+      return;
+    }
+
+    setIsLoading(true);
+    const data = { product_id: productId, processes }
+    fetch(`https://a7ivt3xloc.execute-api.us-east-2.amazonaws.com/prod-info/product`, {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(response => {
+        console.log(response);
+        if (response.status === 404) {
+          toast.error('Product does not exist!');
+        } else if (response.status === 200) {
+          toast.success('Product Updated!');
+        } else {
+          toast.error('Something went wrong!');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => console.error(error))
+      .finally(() => setIsLoading(false));;
+  };
+
+  const handleDelete = () => {
+    if (!productId) {
+      alert('Please fill in the product id correctly');
+      return;
+    }
+
+    setIsLoading(true);
+    const data = { product_id: productId }
+    fetch(`https://a7ivt3xloc.execute-api.us-east-2.amazonaws.com/prod-info/product`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    })
+      .then(response => {
+        console.log(response);
+        if (response.status === 404) {
+          toast.error('Product does not exist!');
+        } else if (response.status === 200) {
+          toast.success('Product Deleted!');
+        } else {
+          toast.error('Something went wrong!');
+        }
+        return response.json();
+      })
+      .then(data => {
+        console.log(data);
+      })
+      .catch(error => console.error(error))
+      .finally(() => setIsLoading(false));;
+  };
+
   return (
     <div className="d-flex justify-content-center">
+      <ToastContainer />
       <div className="row-md-6">
-        <Form onSubmit={handleSubmit} className='mx-3'>
-          <Form.Group controlId="formProductId" className='mb-3'>
+        <Form className="mx-3">
+          <Form.Group controlId="formProductId" className="mb-3">
             <Form.Label>Product ID</Form.Label>
             <Autosuggest
               suggestions={getColorSuggestions(productId)}
-              onSuggestionsFetchRequested={({ value }) => setColorSuggestions(getColorSuggestions(value))}
-              onSuggestionsClearRequested={() => setColorSuggestions([])}
+              onSuggestionsFetchRequested={({ value }) =>
+                setColorSuggestions(getColorSuggestions(value))
+              }
+              onSuggestionsClearRequested={() =>
+                setColorSuggestions([])
+              }
               getSuggestionValue={(suggestion) => suggestion.name}
               renderSuggestion={renderColorSuggestion}
               inputProps={{
-                placeholder: 'Product ID',
+                placeholder: "Product ID",
                 value: productId,
                 onChange: handleColorChange,
               }}
@@ -100,47 +191,71 @@ const P2 = () => {
           {processes.map((process, index) => (
             <Row key={index} className="mb-3 align-items-end">
               <Col>
-                <Form.Group controlId={`formProcessName${index}`}>
+                <Form.Group
+                  controlId={`formProcessName${index}`}
+                >
                   {/* <Form.Label>Process Name</Form.Label> */}
                   <Form.Control
                     type="text"
                     name="name"
                     placeholder="Enter Process Name"
                     value={process.name}
-                    onChange={(event) => handleInputChange(index, event)}
+                    onChange={(event) =>
+                      handleInputChange(index, event)
+                    }
                     required
                   />
                 </Form.Group>
               </Col>
               <Col>
-                <Form.Group controlId={`formProcessTime${index}`}>
+                <Form.Group
+                  controlId={`formProcessTime${index}`}
+                >
                   {/* <Form.Label>Process Time</Form.Label> */}
                   <Form.Control
                     type="number"
                     name="time"
                     placeholder="Enter Process Time"
                     value={process.time}
-                    onChange={(event) => handleInputChange(index, event)}
+                    onChange={(event) =>
+                      handleInputChange(index, event)
+                    }
                     required
                   />
                 </Form.Group>
               </Col>
               <Col className="d-flex justify-content-end">
-                <Button variant="danger" onClick={() => handleRemoveProcess(index)}>
+                <Button
+                  variant="secondary"
+                  onClick={() => handleRemoveProcess(index)}
+                >
                   Remove
                 </Button>
               </Col>
             </Row>
           ))}
           <div className="d-flex justify-content-center my-3">
-            <Button variant="primary" type="submit" className="mr-3 mx-3">
-              Submit
-            </Button>
-            <Button variant="secondary" onClick={handleAddProcess}>
+            <Button className="mr-3 mx-3" variant="success" onClick={handleAddProcess}>
               Add Process
+            </Button>
+            <Button
+              onClick={handleCreate}
+              variant="primary"
+              className="mr-3 mx-3"
+            >
+              Create
+            </Button>
+            <Button className="mr-3 mx-3" variant="warning" onClick={handleUpdate}>
+              Update Product
+            </Button>
+            <Button className="mr-3 mx-3" variant="danger" onClick={handleDelete}>
+              Delete Product
             </Button>
           </div>
         </Form>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+          {isLoading && <Spinner animation="border" />}
+        </div>
       </div>
     </div>
   );
