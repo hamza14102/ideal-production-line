@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Autosuggest from 'react-autosuggest';
-import ProductTable from './ProductTable';
+// import ProductTable from './ProductTable';
 import { Form, Button, Spinner } from "react-bootstrap";
 import DisplayData from "./DisplayData";
 
