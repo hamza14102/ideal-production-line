@@ -27,7 +27,7 @@ const SupervisorSearch = () => {
     const firstNames = selectedProduct.processes.map((product) => product.name);
     const lastNames = selectedProduct.processes.map((product) => product.time);
     const number = totalManpower;
-    console.log(firstNames, lastNames, number);
+    // console.log(firstNames, lastNames, number);
 
     const apiGatewayUrl = 'https://4110ohgv2h.execute-api.us-east-2.amazonaws.com/launch';
     const resourcePath = '/p1';
@@ -43,7 +43,7 @@ const SupervisorSearch = () => {
         return response.json();
       })
       .then(data => {
-        console.log(data);
+        // console.log(data);
         setData(data);
         setLoaded(true);
         setLoading(false);
@@ -92,7 +92,7 @@ const SupervisorSearch = () => {
 
   const onSuggestionSelected = (event, { suggestion }) => {
     setSelectedProduct(suggestion);
-    console.log(suggestion);
+    // console.log(suggestion);
   };
 
   const renderSuggestion = (suggestion) => <div>{suggestion.product_id}</div>;
