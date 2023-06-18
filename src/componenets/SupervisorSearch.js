@@ -73,7 +73,7 @@ const SupervisorSearch = () => {
     const inputLength = inputValue.length;
 
     return inputLength === 0
-      ? []
+      ? products
       : products.filter(
         (product) =>
           product.product_id.toString().toLowerCase().slice(0, inputLength) === inputValue
@@ -114,6 +114,7 @@ const SupervisorSearch = () => {
         <ToastContainer />
         <div className="row-md-6 d-flex align-items-center">
           <Autosuggest
+            shouldRenderSuggestions={() => true}
             suggestions={suggestions}
             onSuggestionsFetchRequested={onSuggestionsFetchRequested}
             onSuggestionsClearRequested={onSuggestionsClearRequested}
