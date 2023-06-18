@@ -3,7 +3,7 @@ import Autosuggest from 'react-autosuggest';
 // import ProductTable from './ProductTable';
 import { Form, Button, Spinner } from "react-bootstrap";
 import DisplayData from "./DisplayData";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 const SupervisorSearch = () => {
@@ -49,7 +49,7 @@ const SupervisorSearch = () => {
         setLoading(false);
       })
       .catch(error => {
-        console.error(error);
+        toast.error(error);
         alert('There was an error submitting the form. Please try again later.');
         setLoading(false);
       });
