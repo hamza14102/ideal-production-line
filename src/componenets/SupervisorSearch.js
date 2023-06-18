@@ -3,6 +3,8 @@ import Autosuggest from 'react-autosuggest';
 // import ProductTable from './ProductTable';
 import { Form, Button, Spinner } from "react-bootstrap";
 import DisplayData from "./DisplayData";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SupervisorSearch = () => {
   const [value, setValue] = useState('');
@@ -76,6 +78,11 @@ const SupervisorSearch = () => {
   };
 
   const onSuggestionsFetchRequested = ({ value }) => {
+    fetch('https://a7ivt3xloc.execute-api.us-east-2.amazonaws.com/prod-info/products')
+      .then(response => response.json())
+      .then(data => {
+        setProducts(data)
+      });
     setSuggestions(getSuggestions(value));
   };
 
@@ -101,6 +108,7 @@ const SupervisorSearch = () => {
   return (
     <div>
       <div className="d-flex justify-content-center mt-3">
+        <ToastContainer />
         <div className="row-md-6 d-flex align-items-center">
           <Autosuggest
             suggestions={suggestions}
