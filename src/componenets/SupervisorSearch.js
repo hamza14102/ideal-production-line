@@ -23,11 +23,14 @@ const SupervisorSearch = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // Do something with the totalManpower value
+    const suggestion_ids = products.map((suggestion) => suggestion.product_id);
+    if (!suggestion_ids.includes(inputProps.value)) {
+      toast.error(`Product with name ${inputProps.value} not found`);
+      return;
+    }
     const firstNames = selectedProduct.processes.map((product) => product.name);
     const lastNames = selectedProduct.processes.map((product) => product.time);
     const number = totalManpower;
-    // console.log(firstNames, lastNames, number);
 
     const apiGatewayUrl = 'https://4110ohgv2h.execute-api.us-east-2.amazonaws.com/launch';
     const resourcePath = '/p1';
