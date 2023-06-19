@@ -35,7 +35,7 @@ const P2 = () => {
     const inputValue = value.trim().toLowerCase();
     const inputLength = inputValue.length;
     return inputLength === 0
-      ? []
+      ? products
       : products.filter(
         (option) => {
           return option.product_id.toLowerCase().slice(0, inputLength) ===
@@ -163,6 +163,14 @@ const P2 = () => {
       .finally(() => setIsLoading(false));;
   };
 
+  function renderSuggestionsContainer({ containerProps, children, query }) {
+    return (
+      <div {...containerProps} className='suggestions-container'>
+        {children}
+      </div>
+    );
+  }
+
   return (
     <div className="d-flex justify-content-center">
       <ToastContainer />
@@ -171,6 +179,7 @@ const P2 = () => {
           <Form.Group controlId="formProductId" className="mb-3">
             <Form.Label>Product ID</Form.Label>
             <Autosuggest
+              shouldRenderSuggestions={() => true}
               suggestions={getColorSuggestions(productId)}
               onSuggestionsFetchRequested={({ value }) =>
                 setColorSuggestions(getColorSuggestions(value))
@@ -186,6 +195,7 @@ const P2 = () => {
                 onChange: handleColorChange,
               }}
               onSuggestionSelected={handleColorSuggestionSelected}
+              renderSuggestionsContainer={renderSuggestionsContainer}
             />
           </Form.Group>
           {processes.map((process, index) => (
