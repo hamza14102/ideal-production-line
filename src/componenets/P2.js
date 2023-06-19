@@ -44,6 +44,15 @@ const P2 = () => {
       );
   };
 
+  const onSuggestionsFetchRequested = ({ value }) => {
+    fetch('https://a7ivt3xloc.execute-api.us-east-2.amazonaws.com/prod-info/products')
+      .then(response => response.json())
+      .then(data => {
+        setProducts(data)
+      });
+    setColorSuggestions(getColorSuggestions(value));
+  };
+
   const handleColorSuggestionSelected = (event, { suggestion }) => {
     setProductId(suggestion.product_id);
   };
@@ -181,9 +190,7 @@ const P2 = () => {
             <Autosuggest
               shouldRenderSuggestions={() => true}
               suggestions={getColorSuggestions(productId)}
-              onSuggestionsFetchRequested={({ value }) =>
-                setColorSuggestions(getColorSuggestions(value))
-              }
+              onSuggestionsFetchRequested={onSuggestionsFetchRequested}
               onSuggestionsClearRequested={() =>
                 setColorSuggestions([])
               }
