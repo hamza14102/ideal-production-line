@@ -23,6 +23,23 @@ const P2 = () => {
       });
   }, []);
 
+  // fetch processes on product id change
+  useEffect(() => {
+    // if invlaid product id or product id is not in products, return
+    if (!productId || !products.map((product) => product.product_id).includes(productId)) {
+      return;
+    }
+    fetch(`https://a7ivt3xloc.execute-api.us-east-2.amazonaws.com/prod-info/product?product_id=${productId}`,
+      {
+        method: 'GET',
+      })
+      .then(response => response.json())
+      .then(data => {
+        setProcesses(data.processes)
+      });
+  }, [productId, products]);
+
+
   const handleColorChange = (event, { newValue }) => {
     setProductId(newValue);
   };
@@ -55,7 +72,7 @@ const P2 = () => {
 
   const handleColorSuggestionSelected = (event, { suggestion }) => {
     setProductId(suggestion.product_id);
-    setProcesses(suggestion.processes);
+    // setProcesses(suggestion.processes);
   };
 
   const handleInputChange = (index, event) => {
@@ -87,7 +104,7 @@ const P2 = () => {
     }
 
     setIsLoading(true);
-    const data = { product_id: productId, processes };
+    const data = { product_id: productId.trim(), processes };
     fetch('https://a7ivt3xloc.execute-api.us-east-2.amazonaws.com/prod-info/product', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -206,7 +223,7 @@ const P2 = () => {
               renderSuggestionsContainer={renderSuggestionsContainer}
             />
           </Form.Group>
-          {processes.map((process, index) => (
+          {processes && processes.map((process, index) => (
             <Row key={index} className="mb-3 align-items-end">
               <Col>
                 <Form.Group
