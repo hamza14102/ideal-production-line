@@ -55,6 +55,7 @@ const P2 = () => {
 
   const handleColorSuggestionSelected = (event, { suggestion }) => {
     setProductId(suggestion.product_id);
+    setProcesses(suggestion.processes);
   };
 
   const handleInputChange = (index, event) => {
