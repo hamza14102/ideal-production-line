@@ -14,6 +14,7 @@ code {
 
 .react-autosuggest__container {
   position: relative;
+  margin-right: 10px;
 }
 
 .react-autosuggest__suggestions-container {
