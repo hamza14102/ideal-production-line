@@ -64,3 +64,10 @@ code {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
 }
+
+.suggestions-container {
+  position: absolute;
+  z-index: 1;
+  max-height: 400px;
+  overflow-y: auto;
+}

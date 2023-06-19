@@ -108,6 +108,14 @@ const SupervisorSearch = () => {
     }
   };
 
+  function renderSuggestionsContainer({ containerProps, children, query }) {
+    return (
+      <div {...containerProps} className='suggestions-container'>
+        {children}
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className="d-flex justify-content-center mt-3">
@@ -122,6 +130,8 @@ const SupervisorSearch = () => {
             getSuggestionValue={(suggestion) => suggestion.product_id.toString()}
             renderSuggestion={renderSuggestion}
             inputProps={inputProps}
+            renderSuggestionsContainer={renderSuggestionsContainer}
+
           />
           {/* {selectedProduct && <ProductTable product={selectedProduct} />} */}
           <Form onSubmit={handleSubmit} className="ml-3">
