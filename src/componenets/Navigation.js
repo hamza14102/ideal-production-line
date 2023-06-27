@@ -22,10 +22,10 @@ const Navigation = () => {
           {/* <Link to="/P1" className="nav-link">
             Distribution Calculator
           </Link> */}
-          <Link to="/P2" className="nav-link" onClick={() => setExpanded(false)}>
+          <Link to="/P2" className="nav-link" onClick={() => setTimeout(() => { setExpanded(false) }, 200)}>
             Create Product
           </Link>
-          <Link to="/SupervisorSearch" className="nav-link" onClick={() => setExpanded(false)}>
+          <Link to="/SupervisorSearch" className="nav-link" onClick={() => setTimeout(() => { setExpanded(false) }, 200)}>
             Supervisor Search
           </Link>
         </Nav>
