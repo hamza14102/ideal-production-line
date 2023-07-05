@@ -2,14 +2,16 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './componenets/Home';
 import P1 from './componenets/P1';
 import P2 from './componenets/P2';
-import Navigation from './componenets/Navigation';
+// import Navigation from './componenets/Navigation';
 import SupervisorSearch from './componenets/SupervisorSearch';
+import ResponsiveAppBar from './componenets/ResponsiveNavbar';
 
 function App() {
 	return (
 		<div className="App">
 			<Router basename={process.env.PUBLIC_URL}>
-				<Navigation />
+				<ResponsiveAppBar />
+				{/* <Navigation /> */}
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/P1" element={<P1 />} />
