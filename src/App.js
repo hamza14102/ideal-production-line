@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Home from './componenets/Home';
 import P1 from './componenets/P1';
-import P2 from './componenets/P2';
+import CreateProduct from './componenets/CreateProduct';
 // import Navigation from './componenets/Navigation';
 import SupervisorSearch from './componenets/SupervisorSearch';
 import ResponsiveAppBar from './componenets/ResponsiveNavbar';
@@ -15,7 +15,7 @@ function App() {
 				<Routes>
 					<Route path="/" element={<Home />} />
 					<Route path="/P1" element={<P1 />} />
-					<Route path="/P2" element={<P2 />} />
+					<Route path="/CreateProduct" element={<CreateProduct />} />
 					<Route path="/SupervisorSearch" element={<SupervisorSearch />} />
 				</Routes>
 			</Router>

@@ -5,7 +5,7 @@ import { Spinner } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-const P2 = () => {
+const CreateProduct = () => {
   const [productId, setProductId] = useState("");
   const [processes, setProcesses] = useState([{ name: "", time: "" }]);
   // eslint-disable-next-line no-unused-vars
@@ -296,4 +296,4 @@ const P2 = () => {
   );
 };
 
-export default P2;
+export default CreateProduct;
