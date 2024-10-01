@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Form, Button, Row, Col } from "react-bootstrap";
 import Autosuggest from "react-autosuggest";
 import { Spinner } from 'react-bootstrap';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { DepartmentContext } from '../contexts/DepartmentContext';
 
 const P2 = () => {
   const [productId, setProductId] = useState("");
@@ -11,6 +12,7 @@ const P2 = () => {
   // eslint-disable-next-line no-unused-vars
   const [colorSuggestions, setColorSuggestions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+  const { department } = useContext(DepartmentContext);
 
 
   const [products, setProducts] = useState([]);
@@ -203,6 +205,9 @@ const P2 = () => {
       <ToastContainer />
       <div className="row-md-6">
         <Form className="mx-3">
+          <div>
+            <h1>Current Department: {department}</h1>
+          </div>
           <Form.Group controlId="formProductId" className="mb-3">
             <Form.Label>Product ID</Form.Label>
             <Autosuggest
