@@ -211,9 +211,9 @@ const P2 = () => {
       <ToastContainer />
       <div className="row-md-6">
         <Form className="mx-3">
-          <div>
+          {/* <div>
             <h1>Current Department: {department}</h1>
-          </div>
+          </div> */}
           <Form.Group controlId="formProductId" className="mb-3">
             <Form.Label>Product ID</Form.Label>
             <Autosuggest
