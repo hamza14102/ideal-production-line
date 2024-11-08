@@ -104,9 +104,13 @@ const P2 = () => {
       alert('Please fill in all fields correctly');
       return;
     }
+    if (department === 'Select Department') {
+      alert('Please select a department');
+      return;
+    }
 
     setIsLoading(true);
-    const data = { product_id: productId.trim(), processes };
+    const data = { product_id: productId.trim(), processes, department: department };
     fetch('https://a7ivt3xloc.execute-api.us-east-2.amazonaws.com/prod-info/product', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -193,8 +197,10 @@ const P2 = () => {
   };
 
   function renderSuggestionsContainer({ containerProps, children, query }) {
+    const { key, ...restContainerProps } = containerProps; // Destructure key from containerProps
+
     return (
-      <div {...containerProps} className='suggestions-container'>
+      <div {...restContainerProps} className='suggestions-container'>
         {children}
       </div>
     );
